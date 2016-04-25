@@ -1,13 +1,16 @@
 ---
-layout:     post
-title:      "Hello 2015"
-subtitle:   " \"Hello World, Hello Blog\""
-date:       2015-01-29 12:00:00
-author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
+layout: post
+title: Hello 2015
+subtitle: " \"Hello World, Hello Blog\""
+date: 2015-01-29T12:00:00.000Z
+author: Hux
+header-img: img/post-bg-2015.jpg
 catalog: true
 tags:
-    - 生活
+  - 生活
+published: true
+tagline: test
+
 ---
 It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to Google!](http://google.com)
 > “Yeah It's on. ”
