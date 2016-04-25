@@ -13,6 +13,9 @@ tags:
     - 译文
 ---
 
+
+It's very easy to make some words **bold** and other words *italic* with Markdown. You can even [link to Google!](http://google.com)
+
 > 这篇文章转载自[我在知乎专栏「前端外刊评论」上发表的文章](http://zhuanlan.zhihu.com/FrontendMagazine/20549104)。
 aaabbbb (http://wwww.com)
 2222222
