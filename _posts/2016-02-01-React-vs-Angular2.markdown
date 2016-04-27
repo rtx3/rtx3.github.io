@@ -1,16 +1,18 @@
 ---
-layout:     post
-title:      "React vs Angular 2：冰与火之歌「译」"
-subtitle:   "React versus Angular 2: There Will Be Blood"
-date:       2016-02-01 12:00:00
-author:     "Hux"
-header-img: "img/post-bg-re-vs-ng2.jpg"
+layout: post
+title: Github Markdown 写法
+subtitle: "React versus Angular 2: There Will Be Blood"
+date: 2016-02-01T12:00:00.000Z
+author: Hux
+header-img: img/post-bg-re-vs-ng2.jpg
 header-mask: 0.3
-catalog:    true
+catalog: true
 tags:
-    - 前端开发
-    - JavaScript
-    - 译文
+  - 前端开发
+  - JavaScript
+  - 译文
+published: true
+
 ---
 
 
