@@ -12,7 +12,23 @@ published: true
 
 按照[官网][1]的说明安装
 
-1.取得saltstack的
+1.取得saltstack的KEY
 `wget -O - http://repo.saltstack.com/apt/debian/7/amd64/2016.3/SALTSTACK-GPG-KEY.pub | sudo apt-key add -`
+
+2.创建文件**etc/apt/sources.list.d/saltstack.list:**
+`deb http://repo.saltstack.com/apt/debian/7/amd64/2016.3 wheezy main`
+
+3.**sudo apt-get update**
+
+4.按照服务器不同角色选择安装以下部件
+
+`
+* sudo apt-get install salt-master
+* sudo apt-get install salt-minion
+* sudo apt-get install salt-ssh
+* sudo apt-get install salt-syndic
+* sudo apt-get install salt-cloud
+* sudo apt-get install salt-api
+`
 
 [1]:https://repo.saltstack.com/#debian "Saltstack"
