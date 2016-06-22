@@ -47,6 +47,20 @@ Grain翻译过来其实是**谷物**的意思,开发Saltstack的团队真的挺�
 
 而python-pip是指定目录下的子目录,其中的*init.sls*文件会指明具体安装python-pip所需要的软件包,甚至可以根据OS的不同执行不同的安装命令.
 
+总结的来说,Grains可以实现以下这些功能:
+
+`
+* 获取minion上的某些信息并返回
+* 依照Grains的模板对minion进行软件安装,前提是minion可以连接到更新源,或者自有源
+* 对minion某些状态进行检查,实现监控.
+* 成批远程执行任何命令,在管理成百上千台服务器时尤其管用.**一夜之间DD所有服务器也是有可能的**
+`
+
+
+这里有一篇写的很不错的[saltstack教程][3],其中的roles配置非常不错,值得参考.
+
+
+
 
 
 [1]:https://repo.saltstack.com/#debian "Saltstack"
