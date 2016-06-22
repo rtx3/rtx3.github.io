@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 安装Saltsock详细部署
-tagline: "salt sock 运维\_"
+title: 安装Saltstack详细部署
+tagline: "saltstack 运维 自动化运维 paas\_"
 category: null
 tags: []
 published: true
