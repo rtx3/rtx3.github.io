@@ -31,13 +31,25 @@ published: true
 * sudo apt-get install salt-api
 `
 
+接下来是minion和master之间的key认证过程,过程非常简单,可以参考[这篇文件][4]
+
+* master和minion版本需一致
+
 ##0x02 Grains
 
 Grain翻译过来其实是**谷物**的意思,开发Saltstack的团队真的挺有意思.
 
 那么首先Grains到底是什么呢?
 
-讲到本质,Granins其实是一对配置文件而已.通过Saltstack本省带有的逻辑处理
+讲到本质,Granins其实是一对配置文件而已.通过Saltstack本省带有的逻辑关系来进行各种关系处理.举个例子,如果我们要在服务器上安装pip,我们只要在入口配置文件*top.sls*里面写入:
+
+`include python-pip`
+
+而python-pip是指定目录下的子目录,其中的*init.sls*文件会指明具体安装python-pip所需要的软件包,甚至可以根据OS的不同执行不同的安装命令.
+
+
 
 [1]:https://repo.saltstack.com/#debian "Saltstack"
 [2]:https://repo.saltstack.com/#rhel   "Centos Salt"
+[3]:https://github.com/ist0ne/salt-states  "Salt Github"
+[4]:http://www.saltstack.cn/kb/salt-first-view/#salt-first-view "Saltstack初探"
