@@ -54,14 +54,27 @@ Grain翻译过来其实是**谷物**的意思,开发Saltstack的团队真的挺�
 * 依照Grains的模板对minion进行软件安装,前提是minion可以连接到更新源,或者自有源
 * 对minion某些状态进行检查,实现监控.
 * 成批远程执行任何命令,在管理成百上千台服务器时尤其管用.**一夜之间DD所有服务器也是有可能的**.所以当部署在生产环境时,要考虑到角色的权限等问题.
+* Saltstack最大的好处,可以在一台有公网ip的服务器上对内网服务器进行操作配置(原理和rpc转发相同)
 `
 
 接下里简单的讲下Saltstack的Grains是如何部署的.
 
 首先.这里有一篇写的很不错的[saltstack教程][3],其中的roles配置非常不错,值得参考.
 
+Saltstack的默认root file位置是*/srv/salt*,其一般结构如下:
 
+`
+/srv/salt/:
+          top.sls
+          /package
+                  init.sls
+          /roles
+                  role.sls
+`
 
+*sls文件格式是yaml,注意每行的缩进*
+
+top.sls是saltstack默认读取的首个文件,如果不配置分组不配置roles,则只需要在top.sls里面制定每个node的配置模板即可.
 
 
 
