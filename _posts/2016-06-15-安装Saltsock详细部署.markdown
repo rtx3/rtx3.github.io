@@ -31,5 +31,13 @@ published: true
 * sudo apt-get install salt-api
 `
 
+##0x02 Grains
+
+Grain翻译过来其实是**谷物**的意思,开发Saltstack的团队真的挺有意思.
+
+那么首先Grains到底是什么呢?
+
+讲到本质,Granins其实是一对配置文件而已.通过Saltstack本省带有的逻辑处理
+
 [1]:https://repo.saltstack.com/#debian "Saltstack"
 [2]:https://repo.saltstack.com/#rhel   "Centos Salt"
