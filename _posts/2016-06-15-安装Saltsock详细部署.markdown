@@ -79,7 +79,7 @@ top.sls是saltstack默认读取的首个文件,如果不配置分组不配置rol
 `
 base:                        #ID 不可重复
   '*':                       #匹配node,详细参考[compound module][5]
-    - roles.common           #匹配到的node引入到/srv/salt/role/common.lsl
+    - roles.common           #匹配到的node引入到/srv/salt/role/common.sls
   'admin.grid.mall.com':  
     - roles.admin  
   'ha.grid.mall.com':  
@@ -99,6 +99,21 @@ base:                        #ID 不可重复
 `
 
 
+在对应的common.sls中include各个grains,引到对应目录中的init.sls:
+
+
+`
+include:        #引入此包所需要的基础包
+  - ntp
+
+'/usr/sbin/ntpdate 1.cn.pool.ntp.org 1.asia.pool.ntp.org': #不可重复的ID
+  cron.present:               #saltstack的state语法,可以参考[saltstack语法页面][6]
+    - user: root
+    - minute: 0
+    - hour: 2
+
+`
+
 
 
 
@@ -109,3 +124,4 @@ base:                        #ID 不可重复
 [3]:https://github.com/ist0ne/salt-states  "Salt Github"
 [4]:http://www.saltstack.cn/kb/salt-first-view/#salt-first-view "Saltstack初探"
 [5]:https://docs.saltstack.com/en/latest/topics/targeting/compound.html "Saltstack compound module"
+[6]:https://docs.saltstack.com/en/latest/ref/states/all/salt.states.cron.html "cron"
