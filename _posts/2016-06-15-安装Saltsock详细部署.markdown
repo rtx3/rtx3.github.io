@@ -74,7 +74,32 @@ Saltstack的默认root file位置是*/srv/salt*,其一般结构如下:
 
 *sls文件格式是yaml,注意每行的缩进*
 
-top.sls是saltstack默认读取的首个文件,如果不配置分组不配置roles,则只需要在top.sls里面制定每个node的配置模板即可.
+top.sls是saltstack默认读取的首个文件,如果不配置分组不配置roles,则只需要在top.sls里面制定每个node的配置模板即可.这是一个topsls配置:
+
+`
+base:                        #ID 不可重复
+  '*':                       #匹配node,详细参考[compound module][5]
+    - roles.common           #匹配到的node引入到/srv/salt/role/common.lsl
+  'admin.grid.mall.com':  
+    - roles.admin  
+  'ha.grid.mall.com':  
+    - roles.ha  
+  'web*.grid.mall.com':  
+    - roles.web  
+  'cache*.grid.mall.com':  
+    - roles.cache  
+  'mc*.grid.mall.com':  
+    - roles.mc  
+  'db*.grid.mall.com':  
+    - roles.db  
+  'search*.grid.mall.com':  
+    - roles.search  
+  'storage*'.grid.mall.com':  
+    - roles.storage
+`
+
+
+
 
 
 
@@ -83,3 +108,4 @@ top.sls是saltstack默认读取的首个文件,如果不配置分组不配置rol
 [2]:https://repo.saltstack.com/#rhel   "Centos Salt"
 [3]:https://github.com/ist0ne/salt-states  "Salt Github"
 [4]:http://www.saltstack.cn/kb/salt-first-view/#salt-first-view "Saltstack初探"
+[5]:https://docs.saltstack.com/en/latest/topics/targeting/compound.html "Saltstack compound module"
