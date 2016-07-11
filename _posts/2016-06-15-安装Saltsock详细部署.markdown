@@ -134,7 +134,12 @@ git: git
  
  {{ salt['pillar.get']('git', 'git') }}
  
+ 
 `
+
+##0x04 Salt Mine
+
+
 
 
 
