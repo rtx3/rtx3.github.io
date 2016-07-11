@@ -133,6 +133,9 @@ git: git
  {{ pillar['apache'] }}
  
  {{ salt['pillar.get']('git', 'git') }}
+
+`
+
  
  Pillar的主要用途:
 
