@@ -134,10 +134,24 @@ git: git
  
  {{ salt['pillar.get']('git', 'git') }}
  
- 
+ Pillar的主要用途:
+
+` 
+1.敏感数据
+例如ssh key，加密证书等，由于Pillar使用独立的加密session，可以确保这些敏感数据不被其他minion看到。
+2.变量
+可以在Pillar中处理平台差异性，比如针对不同的操作系统设置软件包的名字，然后在State中引用。
+3.其他任何数据
+可以在Pillar中添加任何需要用到的数据。比如定义用户和UID的对应关系，mnion的角色等。
+4.用在Targetting中
+Pillar可以用来选择minion，使用-I选项
+
 `
 
 ##0x04 Salt Mine
+
+Salt Mine是和cmd.run很类似,唯一不同的是执行的结果会通过命令行储存在**Master**中.这个功能在自动注册自动发现的运维系统中非常有用.
+其他方面,runner和schedule也会用到mine所储存的数据.
 
 
 
