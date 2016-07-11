@@ -120,9 +120,21 @@ include:        #引入此包所需要的基础包
 Pillar和Grains一样是一种saltstack的交互模式.和Grains不一样的是,Grains会把每一个命令都发送给所有minion,而由minion端去决定是否要执行对应的命令.相对的pillar只会把对应的数据传给对应的minion,比较适合储存敏感数据.
 
 
+比方说在pillar下面的top.sls有以下内容:
 
+`
+apache: httpd
+git: git
+`
 
+在grains下面的sls文件中可以这么调用:
 
+`
+ {{ pillar['apache'] }}
+ 
+ {{ salt['pillar.get']('git', 'git') }}
+ 
+`
 
 
 
