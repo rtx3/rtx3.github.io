@@ -200,8 +200,62 @@ supervisor:
 
 3. 配置自动部署
 
+首先我们在目录下建立shadowsocks.json
 
+`
+{
+"server":"0.0.0.0",
+"server_port":1000,
+"local_address": "127.0.0.1",
+"local_port":1080,
+"password":"pass here",
+"timeout":300,
+"method":"aes-256-cfb",
+"fast_open": false,
+"workers": 1
+}
+`
+在init.sls中加入:
 
+`
+/etc/shadowsocks.json:
+  file.managed:
+    - template:    jinja
+    - source:      salt://{{ sls }}/etc/shadowsocks.json
+    - user:        root
+    - group:       root
+    - replace:     True
+    - mode:       '0644'
+    - watch:
+       - pkg:       python-pip
+`
+这段配置会在saltstack成功安装后将目录下的json文件替换成我们希望的版本.这样我们就不需要再登陆到服务器上更改配置了.
+
+现在还有一个问题,我们的科学上网还不是以守护进程运行的,我们接下来用supervisor来实现对ss的进程化:
+
+`
+/etc/supervisor/conf.d/shadowsocks.conf:
+  file.managed:
+    - template:     jinja
+    - name:         /etc/supervisor/conf.d/shadowsocks.conf
+    - source:       salt://{{ sls }}/etc/supervisor/conf.d/shadowsocks.conf
+    - user:         root
+    - group:        root
+    - mode:        '0644'
+  cmd.run:
+    - name: /usr/sbin/service supervisor  restart
+`
+这段配置更新了supervisor的conf并重启启动了supervisor的服务.
+
+4. 完成
+最后我们运行salt命令进行远程配置:
+
+`
+salt -C 'server name here' state.apply python-ss
+`
+就可以了.
+
+想看具体代码的可以去[github][6].
 
 
 
