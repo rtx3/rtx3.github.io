@@ -156,6 +156,53 @@ Pillar可以用来选择minion，使用-I选项
 Salt Mine是和cmd.run很类似,唯一不同的是执行的结果会通过命令行储存在**Master**中.这个功能在自动注册自动发现的运维系统中非常有用.
 其他方面,runner和schedule也会用到mine所储存的数据.
 
+##0x05 实际部署应用
+
+接下来我们实际测试部署一下应用,以部署科学上网为例.首先,我们的测试服务器已经建立的主从关系,并且test.ping正常. master的系统是debian7.5, salve的系统是debian 8.
+
+
+1. 在*/srv/salt/*下建立目录python-ss:
+
+`
+mkdir /srv/salt/python-ss
+`
+
+2. 编辑此目录下的init.sls:
+
+
+`
+include:
+  -  python-pip
+  -  supervisor
+
+python-shadowsocks:
+  pip.installed:
+    - name:        shadowsocks
+
+`
+
+这段配置表示shadowsocks这个包的依赖关系,他需要python-pip和supervisor这两个salt配置包.所以我们还要建立python-pip和supervisor这两个目录:
+
+
+`
+python-pip:
+  pkg.installed: []
+    
+    
+supervisor:
+  pip.installed:
+    - require:
+      - pkg:       python-pip
+`
+以上配置完成后,saltstack就会在安装shadowsocks之前自动安装python-pip和supervisor这两项依赖项.
+
+当然,仅仅安装完成是远远不够的,我们还需要saltstack完成自动配置的工作,然后重启服务,甚至防火墙配置才能将自动化运维进行到底.
+
+3. 配置
+
+
+
+
 
 
 
@@ -167,3 +214,4 @@ Salt Mine是和cmd.run很类似,唯一不同的是执行的结果会通过命令
 [4]:http://www.saltstack.cn/kb/salt-first-view/#salt-first-view "Saltstack初探"
 [5]:https://docs.saltstack.com/en/latest/topics/targeting/compound.html "Saltstack compound module"
 [6]:https://docs.saltstack.com/en/latest/ref/states/all/salt.states.cron.html "cron"
+[7]:https://github.com/rtx3/Salt-MWDS.git "github地址"
