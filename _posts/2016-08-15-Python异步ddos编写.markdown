@@ -52,9 +52,29 @@ loop.close()
 
 ##0x02 Chain Coroutine
 
+```
+import asyncio
 
+@asyncio.coroutine
+def compute(x, y):
+    print("Compute %s + %s ..." % (x, y))
+    yield from asyncio.sleep(1.0)
+    return x + y
 
+@asyncio.coroutine
+def print_sum(x, y):
+    result = yield from compute(x, y)
+    print("%s + %s = %s" % (x, y, result))
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(print_sum(1, 2))
+loop.close()
+```
+将一个coroutine和另一个coroutine用yield from联系起来后即形成了一个coroutine chaining.这两个coroutine其实运行与不同的线程之上,通过yield from来交替传值.
+
+![python pic][2]
 
 
 [1]:https://github.com/aosabook/500lines "500 lines"
+[2]:https://docs.python.org/3.4/_images/tulip_coro.png "pic"
 
