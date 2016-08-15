@@ -81,7 +81,12 @@ loop.close()
 
 ##0x03 一个拒绝服务脚本
 
-[github script][3]是一个利用以上异步IO原理写出的py脚本.
+[github script][3]是一个利用以上异步IO原理写出的py脚本,仅可用于教育以及模拟目的.
+
+具体实现不细写了,和chaining coroutine一样.由于读取网页是一个高IO操作,所有的线程都会卡在这一步,从而实现并发模拟效果.
+
+
+如果要实现真正的有效攻击,还要在此基础上改进一些,比方式慢链接什么的.
 
 
 [1]:https://github.com/aosabook/500lines "500 lines"
