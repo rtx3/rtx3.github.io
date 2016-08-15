@@ -49,6 +49,8 @@ loop.close()
 ```
 这段代码会在前五秒内打印出每秒的datetime.new(),主线程在执行loop之后一直在等待恊程完成,如果有更多的task,这个时候主线程就会去执行其他task直到这些任务全部完成.
 
+
+
 ** 恊程并不能替代进程完成高密集IO任务,恊程优势在于在多进程下比较轻,适用于轻量级应用,比如所web访问等等**
 
 ##0x02 Chain Coroutine
@@ -75,7 +77,13 @@ loop.close()
 
 ![python pic][2]
 
+可见其实不同线程运行的是整个程序的不同部分,而主线程在完成了某个任务后会跳跃到下一个任务,不会处于等待状态,增加了程序的效率.
+
+##0x03 一个拒绝服务脚本
+
+
+
 
 [1]:https://github.com/aosabook/500lines "500 lines"
 [2]:https://docs.python.org/3.4/_images/tulip_coro.png "pic"
-
+[3]:https://github.com/rtx3/torddos "script"
