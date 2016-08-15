@@ -16,12 +16,45 @@ Python中支持多线程,也支持多进程.用Py来进行多线程编程大家�
 Coroutines可以做到的一些效果:
 
 
-result = yield from future – 停止当前的coroutine直到future完成,future可以是一个函数,也可以是一段语句或者exception.
+* result = yield from future – 停止当前的coroutine直到future完成,future可以是一个函数,也可以是一段语句或者exception.
 
-result = yield from coroutine – 
+* result = yield from coroutine – 
 唤醒另一个coroutine直到它完成或者raise出一个exception.
 
-return expression – 将计算结果通过yield from传回给原函数.
+* return expression – 将计算结果通过yield from传回给原函数.
 
-raise exception – 传回一个 exception.
+* raise exception – 传回一个 exception.
 ```
+
+一个官网的例子:
+
+
+```
+import asyncio
+import datetime
+
+@asyncio.coroutine
+def display_date(loop):
+    end_time = loop.time() + 5.0
+    while True:
+        print(datetime.datetime.now())
+        if (loop.time() + 1.0) >= end_time:
+            break
+        yield from asyncio.sleep(1)
+
+loop = asyncio.get_event_loop()
+# Blocking call which returns when the display_date() coroutine is done
+loop.run_until_complete(display_date(loop))
+loop.close()
+```
+这段代码会在前五秒内打印出每秒的datetime.new(),主线程在执行loop之后一直在等待恊程完成,如果有更多的task,这个时候主线程就会去执行其他task直到这些任务全部完成.
+
+
+##0x02 Chain Coroutine
+
+
+
+
+
+[1]:https://github.com/aosabook/500lines "500 lines"
+
