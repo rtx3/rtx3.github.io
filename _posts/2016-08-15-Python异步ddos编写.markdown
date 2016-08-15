@@ -81,7 +81,7 @@ loop.close()
 
 ##0x03 一个拒绝服务脚本
 
-
+[github script][3]是一个利用以上异步IO原理写出的py脚本.
 
 
 [1]:https://github.com/aosabook/500lines "500 lines"
