@@ -23,9 +23,19 @@ Web应用。当用户触发的一个操作需要较长时间才能执行完成�
 
 * 不要使用数据库做队列 broker,反复的轮询会拖慢整体性能
 * 使用新的队列来区分不同的任务,并给予队列不同优先级
-    
-    
+* 不要给任务传递 Database/ORM 对象,传递参数,其他直接从书数据库获取
 
+'''
+CELERY_QUEUES = (
+    Queue('default', Exchange('default'), routing_key='default'),
+    Queue('for_task_A', Exchange('for_task_A'), routing_key='for_task_A'),
+    Queue('for_task_B', Exchange('for_task_B'), routing_key='for_task_B'),
+)
+
+CELERY_ROUTES = {
+    'my_taskA': {'queue': 'for_task_A', 'routing_key': 'for_task_A'},
+    'my_taskB': {'queue': 'for_task_B', 'routing_key': 'for_task_B'},
+}
 '''
 
 
