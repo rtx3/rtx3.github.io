@@ -21,6 +21,12 @@ Web应用。当用户触发的一个操作需要较长时间才能执行完成�
 ##最佳实践##
 基于[ Best celery pratice][https://denibertovic.com/posts/celery-best-practices/]
 
+* 不要使用数据库做队列 broker,反复的轮询会拖慢整体性能
+* 使用新的队列来区分不同的任务,并给予队列不同优先级
+'''
+
+'''
+
 
 
 [1]: http://static.open-open.com/lib/uploadImg/20150314/20150314100608_187.png "celery"
