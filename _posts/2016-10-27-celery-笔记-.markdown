@@ -10,7 +10,7 @@ published: true
 ## 架构 笔记##
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
-* 一个 master 进程负责分配工作 
+* 一个 master 进程负责分配工作,master进程主要用来管理worker进程
 
 
 worker进程则是处理基本的网络事件。多个worker进程之间是对等的，他们同等竞争来自客户端的请求，各进程互相之间是独立的。一个请求，只可能在一个worker进程中处理，一个worker进程，不可能处理其它进程的请求。
