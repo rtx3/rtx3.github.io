@@ -9,3 +9,4 @@ published: true
 ---
 ## 架构 笔记##
 ###Nginx ###
+![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
