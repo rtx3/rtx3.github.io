@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "celery 笔记\_"
-tagline: null
+tagline: 架构
 category: null
 tags: []
 published: true
