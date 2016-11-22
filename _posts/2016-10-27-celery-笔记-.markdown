@@ -24,3 +24,6 @@ worker进程则是处理基本的网络事件。多个worker进程之间是对�
 * 加权均衡
 ![weight](http://www.rowkey.me/images/blog_images/nginx/ngx_wr.png)
 排序 -> 链接 -> 减重 ->排序
+
+
+* iphash
