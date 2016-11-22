@@ -27,7 +27,14 @@ worker进程则是处理基本的网络事件。多个worker进程之间是对�
 
 
 * iphash
+
 '''
-a
+ for(i = 0;i < 3;i++){
+     hash = (hash * 113 + iphp->addr[i]) % 6271; 
+ }
+
+ p = hash % iphp->rrp.peers->number; 
 '''
+
+hash 值与 ip 和后端机器数量有关,最大1045个值.当经过20次hash仍然找不到可用的机器时，算法退化成轮询。如果两个ip的初始hash值恰好相同，那么来自这两个ip的请求将永远落在同一台服务器上，这为均衡性埋下了很深的隐患。
 
