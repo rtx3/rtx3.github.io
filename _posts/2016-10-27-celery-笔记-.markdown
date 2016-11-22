@@ -18,3 +18,9 @@ worker进程则是处理基本的网络事件。多个worker进程之间是对�
 开发模型：epoll和kqueue。
 
 支持的事件机制：kqueue、epoll、rt signals、/dev/poll 、event ports、select以及poll。
+
+1.1 负载均衡
+
+* 加权均衡
+![weight](http://www.rowkey.me/images/blog_images/nginx/ngx_wr.png)
+排序 -> 链接 -> 减重 ->排序
