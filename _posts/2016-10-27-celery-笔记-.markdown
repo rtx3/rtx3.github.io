@@ -8,6 +8,23 @@ published: true
 
 ---
 ## 架构 笔记##
+
+##网络通信协议 ##
+诸如TCP/UDP等等）、网络IO（Blocking-IO，NonBlocking-IO、Asyn-IO）、网卡（多队列等）；更偏应用的层面，需要了解例如连接复用、序列化/反序列化、RPC、负载均衡等
+
+##支持大量连接、高并发、低资源消耗的通信程序 ##
+通信模式,中间件通讯模式,订阅等
+
+
+1. 大量client连一个server
+在现如今NonBlocking-IO这么成熟的情况下，一个支持大量client的server已经不那么难写了，但在大规模，并且通常长连接的情况下，有一个点要特别注意，就是当server挂掉的时候，不能出现所有client都在一个时间点发起重连，那样基本就是灾难，在没有经验的情况下我看过好几起类似的case，到client规模上去后，server一重启基本就直接被冲进来的大量建连冲垮了（当然，server的backlog队列首先应该稍微设置大一些），通常可以采用的方法是client重连前都做随机时间的sleep，另外就是重连的间隔采取避让算法。
+
+2. 一个client连大量的server
+有些场景也会出现需要连大量server的现象，在这种情况下，同样要注意的也是不要并发同时去建所有的连接，而是在能力范围内分批去建。
+除了建连接外，另外还要注意的地方是并发发送请求也同样，一定要做好限流，否则很容易会因为一些点慢导致内存爆掉。
+
+
+
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
 * 一个 master 进程负责分配工作,master进程主要用来管理worker进程
