@@ -35,6 +35,7 @@ salt使用ZeroMQ PUB/SUB 的模式来下发命令
 
 发送到4506命令端口->产生 jid->fire event -> 签名下发
 
+minion 验证->执行->加密回传-> master 收集后反馈
 
 
 
