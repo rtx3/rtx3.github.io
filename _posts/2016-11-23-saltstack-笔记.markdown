@@ -18,5 +18,7 @@ aptitude install postgresql-server-dev-9.4
 
 ![salt pstgresql]https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.postgres_local_cache.html#module-salt.returners.postgres_local_cache
 
+!调用returners.postgres_local_cache 
+
 
 
