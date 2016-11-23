@@ -27,6 +27,14 @@ embeddabled networking library / concurrency framework
 it's a socket-inspired API on which you do zmq_recv() and zmq_send(). But message processing rapidly becomes the central loop, and your application soon breaks down into a set of message processing tasks. It is elegant and natural. And it scales: each of these tasks maps to a node, and the nodes talk to each other across arbitrary transports. Two nodes in one process (node is a thread), two nodes on one box (node is a process), or two nodes on one network (node is a box)—it's all the same, with no application code changes.
 
 salt使用ZeroMQ PUB/SUB 的模式来下发命令
+指令分装：
+
+'''
+{'tgt_type': 'glob', 'jid': '', 'key': 'LCkViTMgqKBqb5ooG8kznznztLYPsWR1xdTYnAz9udkU9/Lla32yDvUmVKLPaUNSMtbWdBoQPIs=', 'tgt': '*', 'arg': [], 'fun': 'test.ping', 'kwargs': {'show_timeout': False}, 'cmd': 'publish', 'ret': '', 'user': 'root'}
+'''
+
+发送到4506命令端口->产生 jid->fire event -> 签名下发
+
 
 
 
