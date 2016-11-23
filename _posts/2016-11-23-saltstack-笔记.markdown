@@ -44,3 +44,7 @@ salt/job/[jid]/new -> find jid -> salt/job/[jid]/ret
 读取配置变量->获取 grain 信息-> salt/auth事件
 ->check 当前是否满足 conf 中的配置->满足即建立连接->event启动
 
+##proxy##
+
+
+
