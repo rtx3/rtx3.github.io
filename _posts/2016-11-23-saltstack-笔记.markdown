@@ -41,6 +41,6 @@ minion 验证->执行->加密回传-> master 收集后反馈
 tag:
 salt/job/[jid]/new -> find jid -> salt/job/[jid]/ret
 ###minion 启动顺序###
-
+读取配置变量->获取 grain 信息-> salt/auth事件
 
 
