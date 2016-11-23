@@ -20,5 +20,8 @@ aptitude install postgresql-server-dev-9.4
 
 !调用returners.postgres_local_cache 
 
+###ZeroMQ###
+
+
 
 
