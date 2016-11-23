@@ -44,6 +44,9 @@ salt/job/[jid]/new -> find jid -> salt/job/[jid]/ret
 读取配置变量->获取 grain 信息-> salt/auth事件
 ->check 当前是否满足 conf 中的配置->满足即建立连接->event启动
 
+### reactor ###
+reactor 可以在对应 event 发生时触发
+
 ##proxy##
 
 salt proxy 使用场合是在一些不能安装 salt minion 的机器上,比如路由器,交换机等. saltstack 并没有提供实际方法来调用这些接口,所有这些需要另外实现.
