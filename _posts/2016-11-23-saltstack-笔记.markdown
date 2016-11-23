@@ -46,5 +46,5 @@ salt/job/[jid]/new -> find jid -> salt/job/[jid]/ret
 
 ##proxy##
 
-
+salt proxy 使用场合是在一些不能安装 salt minion 的机器上,比如路由器,交换机等. saltstack 并没有提供实际方法来调用这些接口,所有这些需要另外实现.
 
