@@ -22,6 +22,8 @@ aptitude install postgresql-server-dev-9.4
 
 ###ZeroMQ###
 
+embeddabled networking library / concurrency framework
+
 
 
 
