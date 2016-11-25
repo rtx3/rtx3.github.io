@@ -62,6 +62,10 @@ Copy这种常见于读远多于写的情况，实现起来又会有最终一致�
 - 动态数据分层效验,前端分流效验数据时候能够走 cache, 后端限流写数据任务
 - 数据库层需要做强一致性效验
 
+2 优化
+- 建立实时热点分析系统,实时推送热点到 cache
+- 请求在代理层上直接返回,不要下放到应用层
+
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
 * 一个 master 进程负责分配工作,master进程主要用来管理worker进程
