@@ -57,7 +57,10 @@ Copy这种常见于读远多于写的情况，实现起来又会有最终一致�
 
 
 ### 缓存 ###
-
+1 动静分离
+- 静态页面缓存在客户端,刷新到 cdn
+- 动态数据分层效验,前端分流效验数据时候能够走 cache, 后端限流写数据任务
+- 
 
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
