@@ -64,7 +64,8 @@ Copy这种常见于读远多于写的情况，实现起来又会有最终一致�
 
 2 优化
 - 建立实时热点分析系统,实时推送热点到 cache
-- 请求在代理层上直接返回,不要下放到应用层
+- 请求在代理层上直接返回,不要下放到应用层.应用层只处理动态数据.
+
 
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
