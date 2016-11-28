@@ -71,6 +71,8 @@ Copy这种常见于读远多于写的情况，实现起来又会有最终一致�
 - 应用层对队列进行排序,避免同一资源请求占用太多连接
 - 数据库层进行事务排队
 
+###负载均衡###
+
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
 * 一个 master 进程负责分配工作,master进程主要用来管理worker进程
