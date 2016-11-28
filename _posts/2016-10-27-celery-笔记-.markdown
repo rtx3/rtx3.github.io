@@ -90,6 +90,8 @@ IP
 ![dr2](http://7xnp02.com1.z0.glb.clouddn.com/820332-20151213200117825-1452672107.png)
 
 
+LVS
+
 ###Nginx ###
 ![nginx](http://www.rowkey.me/images/blog_images/nginx/ngx_arch.jpg)
 * 一个 master 进程负责分配工作,master进程主要用来管理worker进程
