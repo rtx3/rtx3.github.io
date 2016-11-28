@@ -202,3 +202,8 @@ Jenkins将镜像推到Docker Hub
 
 * 在consistent hash中，有一个hash环，代表一个范围，例如，可以取值为[0,2^64-1]。对于，每个Cache Server会根据hash函数算出一个整数值，最终落到hash环的某个点上，如图中的Cache Server 1-5。每个(key,value)对存储在hash环上顺时针的下一个Cache Server，举个例子，假设hash(Cache Server i) = Hi，i=1..5，如果(1,2)的hash取值处于[H1,H2)之间的话，那么它会存储在Cache Server2上，以此类推。
 
+'''
+Cache Server在hash环上的分布可能不均匀，导致Cache Server间的负载不均衡
+Cache Server的配置可能不同，所以能承受的负载也不同，而上述的consistent hash是没有考虑这个因素的
+'''
+
