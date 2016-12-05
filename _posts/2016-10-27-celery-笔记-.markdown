@@ -341,3 +341,7 @@ Scheduler/Scheduler Driver
    
 Executor/Executor Driver
 如果Executor和Scheduler是对应的， Executor就是执行的这一部分。Mesos container这个Executor是Mesos自己提供的，不用写Executor就可以launch一个Docker的任务。但如果有一些自己的需求，就需要去实现一个Executor，比如七牛和乐视实现了一些Executor。
+
+
+
+###Marathon###
