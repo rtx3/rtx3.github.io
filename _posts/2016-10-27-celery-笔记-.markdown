@@ -318,3 +318,6 @@ Offer是Mesos资源的抽象，比如说有多少CPU、多少memory，disc是多
   
 Task
 Task实际上是运行的小任务。有两大类Task，一大类我们叫Long Running Task，比如Docker的一个进程或者其它的进程。另外一类是Batch类型任务，这类应用非常广泛，比如说Map Reduce这么一个小任务或者是定时任务。
+
+###Mesos内部工作原理###
+
