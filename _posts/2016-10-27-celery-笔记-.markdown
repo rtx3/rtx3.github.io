@@ -345,3 +345,18 @@ Executor/Executor Driver
 
 
 ###Marathon###
+
+
+刚才已经提到了Marathon基本的功能，Marathon作为一个Long Running上一层的调度机制，为用户做了很多有意义的事情。单纯一个Mesos的话做不了什么，因为Task的力度特别小，Mesos的功能更偏重于资源的管理、资源的调度，Marathon更偏向于一些任务。
+
+Marathon提出了几个概念，最核心的概念叫application，还有Group的application，是一组的application。一个application是什么呢？比如一个Rails的任务、NodeJS任务或者其它的一些任务，在部署的时候并不是部署一个Task，而是部署非常多的Task，application就是一组Task。这个Task在Marathon里面叫instance，可以选择scale down或者scale up这些instance，这些任务最终交给Mesos，Mesos调度到不同的slave上。
+
+围绕着这个application，Marathon就提供了一些概念叫Group，Group是一组application。举例来说，在内部可能有很多的微服务，这些微服务达到同一个目标，比如说服务之间还有调用、还有依赖，这时去发一个Group application就比较好用。但实际工作中，因为生产级别的服务对稳定性的要求很高， Group之间其实假设服务和服务之间是有一定的依赖。
+  
+Marathon提供了一个有意思的feature—— rolling update。假如有APP的新版本上来，它可以通过一定的机制去发多个版本，而且可以多个版本共存。如果那个新版本没有问题的话，可以继续preceeding deployment。如果有问题的话，可以Rollback。这时有两个概念Deployment和Version，可以选定哪一个Version，想Rollback哪个Version。Deployment是每次update，每次更新、每次重新的Deployment、每次scale，都会在内部生成一个Deployment，和应用一对多有关。有趣的是Deployment之间是不可以重叠的，Deployment是一种部署排队的机制，Deployment不可以多个同时进行，既想update又想scale，会让Marathon崩溃。
+  
+Marathon scale和rolling update的功能都非常有用，比如新浪微博现在有一个大的事件，需要更多的Task顶上来，立刻 scale up，只要资源足够就可以无限多的Task生成。Rollback，如果有一个版本有问题，可以瞬间Rollback到以前一个健康的版本。
+  
+虽然Mesos对下面的资源做了一些抽象，但是有时候有一些倾向性，比如希望CPU使用率比较高的一些任务调度到CPU比较好的机器上，需要一种在调度上的倾向性来满足刚才的场景。很多调度器都有类似的功能，叫Constraints，比如一台主机的label，要把Task打到一组主机这样的Label上或者是Host name like，这是Marathon做的，Mesos不用做这类的事情。
+  
+Marathon的接口非常友好，都是HTTP的接口。Mesos的接口by design不是面向最终用户，所以它的接口并不是那么友好。马拉松的UI也非常漂亮，尤其是新版
