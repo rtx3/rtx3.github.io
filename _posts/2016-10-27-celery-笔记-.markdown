@@ -280,5 +280,23 @@ Cache Server的配置可能不同，所以能承受的负载也不同，而上�
 '''
 
 
-##MESOS ##
+##MESOS##
+
+
+###Mesos内部构成###
+首先，Mesos是一个分布式的架构，它分Mesos master和Mesos slave，slave和master分别有不同的职责。从Mesos的源代码可以看出Mesos实现得比较优雅——它是一个C++代码。代码中有大量的关键词叫process，它不是传统意义上的进程，而是一种抽象的libprocess，libprocess是它最核心的库。如果大家以前使用过Erlang的语言就知道libprocess实际是对Erlang的IO和通讯模型的一个抽象。
+
+libprocess，在Erlang里面也叫进程，实际上是一个虚拟进程，在运行Erlang的VM上。它最优的特点是消息在不同的process之间传递，它抽象了process，消息传递其实是一个事件的库。向process里发一个消息，这个消息不是直接打到process，而是中间有一个buffer的过程。
+
+这样做的优点是特别适合分布式的系统，以前最常用的做法是监听网络端口，有包来了，有一个模块专门负责解这个包，解开一个协议后把这个协议发到后面一个处理进程，这个处理的进程可能是IO操作，可能去做其它事情，然后里面有很多IO上的Block，最后构造出一个response，通过一个socket传给客户端。这是最常用的一个写网络程序的办法，但是这里有一个大的IO上Block的地方——后面处理的逻辑依赖于解包的逻辑。如果处理逻辑很快，但解包逻辑很慢，后面会拖慢，都在等解包。
+
+后来人们想到一种IO处理的方式，让任何一个东西都是分离的，比如从某一个端口收到一个消息，有一个单独的进程，一个线程或者其它的东西去处理这个唯一的请求。这个线程很重，后来大家又发明了一些其它的东西，比如golang里面去搞一个channel，Erlang里面去搞一个process。libprocess实际上做了IO方面的事情， Mesos大量使用这个模型。
+   
+Zookeeper
+Mesos底层实际上依赖于Zookeeper，为了保证分布式存储最终一致性。在Mesos运行过程中产生了一些数据，最终都会落在Zookeeper。因为Mesos是多个master，为了达到HA的需求，只要一个master活的，那么整个服务就能得到保证。
+   
+protobuf
+Mesos内部在通信里面选择了protobuf协议。好处是比较流行，各个语言的库都比较多，结构化的语义也比较强，所以Mesos内部选择了protobuf。
+ 
+###Mesos概念解析### 
 
