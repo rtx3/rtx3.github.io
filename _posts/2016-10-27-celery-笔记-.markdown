@@ -300,3 +300,21 @@ Mesos内部在通信里面选择了protobuf协议。好处是比较流行，各�
  
 ###Mesos概念解析### 
 
+
+Mesos master&slave   
+Mesos是一个分布式的系统，分master和slave， master的部分主要协调任务的分发、一些资源的调度。slave是负责执行的部分，比如一个任务最终是slave去执行的。当然，可以配在master执行。Mesos是一个双层调度，slave处于下层，也就是说可以动态的增加或者减少一些slave而不影响整个的任务池资源的变化，不影响上一层的任务。
+  
+Executor
+Executor是真正的执行任务的逻辑。Mesos平台不太区分需要执行什么任务，所以它给用户一些灵活性，可以写不同的Executor。比如最常用的Mesos运行容器的部分，就是一个Executor。还有Map Reduce的大型任务，一个Map、一个Reduce， Executor都可以执行。它的表现形式可以是一个二进制，Mesos在运行时，slave会把Executor从远程一个URL上拉下来，然后开始执行Executor。
+   
+Scheduler
+Scheduler的意思是调度， Mesos master和slave把资源收上来之后，再把这些任务交给Scheduler，由Scheduler决定应该运行什么Task。
+   
+Framework
+Framework是双层调度的上一层，也就是由Framework来决定到底该执行什么任务，然后执行多少这样的任务。
+   
+Offer
+Offer是Mesos资源的抽象，比如说有多少CPU、多少memory，disc是多少，都放在Offer里，打包给一个Framework，然后Framework来决定到底怎么用这个Offer。
+  
+Task
+Task实际上是运行的小任务。有两大类Task，一大类我们叫Long Running Task，比如Docker的一个进程或者其它的进程。另外一类是Batch类型任务，这类应用非常广泛，比如说Map Reduce这么一个小任务或者是定时任务。
