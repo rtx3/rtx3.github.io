@@ -321,3 +321,23 @@ Task实际上是运行的小任务。有两大类Task，一大类我们叫Long R
 
 ###Mesos内部工作原理###
 
+
+
+Mesos master & slave
+Mesos master是整个集群的核心，master为了保证高可用其实是可以跑多个master，分布式系统为了保证尽量的高可用，其实是可以有多个master在那儿运行的。比如倒了几个master，不会影响整个服务。Mesos master主要内部的工作有：Framework注册或者Framework出了什么问题，它来保证Framework的生命周期；slave的添加、slave的异常、slave的任务分配，我把它叫做slave的Lifecycle；Task Management，比如说Mesos master可能记录了哪些Task运行在哪些slave上；Resource Allocation&Offer，就是说slave有什么资源汇报给master，然后由master把这些任务交给注册在这个master上的一些Framework。
+   
+slave可以动态添加和减少，它lost不会影响整个服务，只是把这个事件（比如说一个slave掉了）由master去通知Framework。在Mesos slave代码里有大量执行器，即Executor的逻辑，因为所有Executor都是在slave上执行的，包括把Executor从远程拉下来、开始执行Executor、开始执行launch task，维护task的生命周期，task fail了如何去做等等。
+
+Mesos Framework
+Mesos的定位是一些资源的调度，它把任务的调度交给了Framework来做，Mesos只关心资源以及把资源给了谁， Framework来决定哪些资源怎么去使用。Mesos鼓励Framework在上面共生。想象一下，作为一个大型公司，有很多的资源，有核心的一组人来维护Mesos的集群，不断的往Mesos上添加资源和减少资源，而把Framework执行的能力交给其它的组、需要资源的那些组，各个组就可以写自己的Framework，丢到整个大的Mesos集群上来执行了。Mesos框架上和执行上各种各样的Framework，而Mesos本身也不了解为什么Framework工作，它只是知道把Offer给Framework，然后Framework告诉它来执行什么样的Executor。
+   
+两个比较流行的Framework
+Marathon Framework，它的任务偏Long Running，核心是application。因为Mesos只关注task本身，task偏向于小任务，不会产生什么巨大的效应，而在企业里面尤其是弹性应用，更多是一个应用，它有很多的实例来执行，这就是Marathon来做的。
+  
+Chornous是一个偏Job、定时任务类型，如果把定时任务以Docker形式发出来，这个Chornous是非常适合的。传统的的Cron Job也是解决这类问题， Cron Job其实有很大的痛点，因为Cron Job是跑在主机上的，主机有limit的限制，如何把Cron Job放在多机上，需要有一个很好的哈希算法。到底如何把一堆单台机器很难执行的多个job水平分布在很多机器上，很麻烦。但是有了这个Chornous的Framework，事情就变得简单多了。
+   
+Scheduler/Scheduler Driver
+它们俩区分度不是太大，有一些区分。Scheduler是做任务分配的，它从master上得到一个Offer的事件，拿到Offer后，决定到底接受这个Offer还是拒绝，接受这个Offer之后，把什么样的Task放在这个Offer上， Framework也开始占用这个Offer，这是Scheduler做的事情。Scheduler Driver其实是偏消息通信的那一部分，而Scheduler可定制化特别强，在代码里看到Scheduler其实是一个java的abstract glass，相当于一个interface，Framework自己去实现这么一个东西。如果想写一个Framework，其实大部分时间在如何写好一个Scheduler实现这一部分。
+   
+Executor/Executor Driver
+如果Executor和Scheduler是对应的， Executor就是执行的这一部分。Mesos container这个Executor是Mesos自己提供的，不用写Executor就可以launch一个Docker的任务。但如果有一些自己的需求，就需要去实现一个Executor，比如七牛和乐视实现了一些Executor。
