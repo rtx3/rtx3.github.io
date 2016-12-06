@@ -360,3 +360,52 @@ Marathon scale和rolling update的功能都非常有用，比如新浪微博现�
 虽然Mesos对下面的资源做了一些抽象，但是有时候有一些倾向性，比如希望CPU使用率比较高的一些任务调度到CPU比较好的机器上，需要一种在调度上的倾向性来满足刚才的场景。很多调度器都有类似的功能，叫Constraints，比如一台主机的label，要把Task打到一组主机这样的Label上或者是Host name like，这是Marathon做的，Mesos不用做这类的事情。
   
 Marathon的接口非常友好，都是HTTP的接口。Mesos的接口by design不是面向最终用户，所以它的接口并不是那么友好。马拉松的UI也非常漂亮，尤其是新版
+
+###Python###
+学习Python的过程中，一开始我对于装饰器contextmanager+yield怎么都不懂。直到我看了contextmanager的源代码, 其实非常简单就懂了。它的docstring清楚地不能再清楚了：
+
+https://hg.python.org/cpython/file/2.7/Lib/contextlib.py#l55
+
+我之前使用多线程编程都这样用，在好长一段时间里面对于多进程和多线程之前怎么选择都搞得不清楚。看多了开源项目代码，我发现了好多人在用multiprocessing.dummy这个子模块，「dummy」这个词本身好奇怪，我决定去看多进程（multiprocessing）库的代码。「咦！怎么和多线程的接口一样呢」。后知后觉的我看到文档中这样说：
+
+multiprocessing.dummy replicates the API of multiprocess
+ing but is no more than a wrapper around the threading
+module.
+
+恍然大悟！！！如果分不清任务是CPU密集型还是IO密集型，我就用如下2个方法分别试：
+from multiprocessing import Pool 
+from multiprocessing.dummy import Pool
+哪个速度快就用那个。从此以后我都尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。
+
+13-14年间，Flask还没怎么火，那时候装饰器风格的Web框架还有一个Bottle。我当时就直接想去看Bottle代码，发现一上来import了一堆模块，你先感受下bottle/bottle.py at master · bottlepy/bottle · GitHub ，第一感觉就是懵啊，这都是干什么的啊，为什么要用啊？这就是促使我去看标准库实现最重要的原因：学会了我才能更好的看懂别人写的代码。
+
+但是不是所有的标准库都要一视同仁的看呢？你可以设置优先级，先看那些不可不知道的模块。我在这里列一下，并对它的用途和其中重要的类、函数的作用加以说明等。要是每个都写例子实在太多太密集，怕大家看不下去，我都用外部链接了。
+
+argparse。 用来替代optparse的命令行解析库。如果你考虑用更直观的，推荐docopt，它使用docstring所见即所得实现命令行解析。
+
+collections。 包含了一些额外的数据类型。其中的OrderedDict（有序列的字典）、defaultdict（带有默认值的字典）、namedtuple（通过创建带有字段属性的元组子类）和deque（高效实现插入和删除操作的双向列表）非常常用。
+
+functools。 这个模块有一些非常有用的工具，其中的partial（偏函数）、wraps（将被包装函数的信息拷贝过来）、totalordering（只需要定义2个_XX方法就可实现对象对比的类装饰器）、cmp_to_key（将老式的比较函数转化为关键字函数）非常常用。
+
+glob。 文件名的shell模式匹配，你不用遍历整个目录判断每个文件是不是符合，使用glob一句话就解决。
+
+multiprocessing。多进程模块，这重要性就不说了。
+
+os。应该是日常工作最常用的模块了，你是否了解它里面所有的函数和实现呢？举个例子，获取环境变量，我之前这样用：
+
+In : os.environ.get(‘PYTHONPATH’)
+读完源码之后我学了一招：
+
+os.getenv(‘PYTHONPATH’)
+好吧，省了5个字符。
+
+Queue。这个模块用于多线程编程，它是一个线程安全的FIFO（先进先出）的队列实现。如果是多进程编程，选用multiprocessing.queues中的Queue、SimpleQueue、JoinableQueue这三个队列实现。
+
+SimpleHTTPServer。最简单地HTTP Server实现。不使用Web框架，一句：
+
+python -m SimpleHTTPServer PORT
+就可以运行起来静态服务。平时用它预览和下载文件太方便了。
+
+subprocess。 如果你还被某些书籍引导使用os.system或者os.popen等模块，现在是放弃它们的时候了，这个模块会满足你绝大多数的系统命令执行、执行结果获取和解析等需求。其中最有用的是call（执行系统命令）、check_call（执行结果不为0则抛出异常）、check_output（最方便的获取执行的输出的函数）、Popen+PIPE（支持管道的多命令执行）。
+
+threading。多线程模块，重要性也不必说。
