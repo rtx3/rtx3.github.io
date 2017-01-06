@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "celery 笔记\_"
+title: 架构笔记
 tagline: 架构
 category: null
 tags: []
